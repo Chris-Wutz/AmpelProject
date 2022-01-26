@@ -108,7 +108,7 @@ namespace AmpelProjekt
                 foreach (Light l in (Light[])Enum.GetValues(typeof(Light)))
                 {
                     setLights(l);
-                    await Task.Delay(2000);
+                    await Task.Delay(1000);
                 }
             }
             return 1;

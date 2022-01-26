@@ -12,13 +12,11 @@ namespace AmpelProjekt.Business
     public class AppMainController
     {
         private MainWindow _main;
-        private List<AmpelGui> _ampelList;
         private AmpelGui _selectedAmpelGui;
         private Ampel _ampelLight;
         public AppMainController(MainWindow main)
         {
             _main = main;
-            _ampelList = new List<AmpelGui>();
             _selectedAmpelGui = null;
             _ampelLight = new Ampel();
             _main.BtnNewAmpel.Click += BtnNewAmpel_Click;
@@ -29,9 +27,8 @@ namespace AmpelProjekt.Business
 
         private async void BtnAutomatik_Click(object sender, RoutedEventArgs e)
         {
-            int result;
             if(checkIfAmpelGuiIsSet())
-                result = await _selectedAmpelGui.automatikMode();
+                await _selectedAmpelGui.automatikMode();
         }
 
         private void BtnSwitchLight_Click(object sender, RoutedEventArgs e)
@@ -49,7 +46,6 @@ namespace AmpelProjekt.Business
         private void BtnNewAmpel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             AmpelGui newAmpel = new AmpelGui(this);
-            _ampelList.Add(newAmpel);
             _selectedAmpelGui = newAmpel;
             _selectedAmpelGui.setRecActive();
             _selectedAmpelGui.Show();
