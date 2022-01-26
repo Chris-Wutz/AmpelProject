@@ -29,26 +29,29 @@ namespace AmpelProjekt.Business
 
         private async void BtnAutomatik_Click(object sender, RoutedEventArgs e)
         {
-            int result = await _selectedAmpelGui.automatikMode();
+            int result;
+            if(checkIfAmpelGuiIsSet())
+                result = await _selectedAmpelGui.automatikMode();
         }
 
         private void BtnSwitchLight_Click(object sender, RoutedEventArgs e)
         {
-            _selectedAmpelGui.setLights(_ampelLight.switchToNextPhase());
+            if(checkIfAmpelGuiIsSet())
+                _selectedAmpelGui.setLights(_ampelLight.switchToNextPhase());
         }
 
         private void BtnStartAmpel_Click(object sender, RoutedEventArgs e)
         {
-            _selectedAmpelGui.setLights(_ampelLight.start());
+            if(checkIfAmpelGuiIsSet())
+                _selectedAmpelGui.setLights(_ampelLight.start());
         }
 
         private void BtnNewAmpel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             AmpelGui newAmpel = new AmpelGui(this);
             _ampelList.Add(newAmpel);
-            if (_selectedAmpelGui != null)
-                _selectedAmpelGui.setRecActive();
             _selectedAmpelGui = newAmpel;
+            _selectedAmpelGui.setRecActive();
             _selectedAmpelGui.Show();
         }
 
@@ -59,6 +62,14 @@ namespace AmpelProjekt.Business
             _selectedAmpelGui = ampel;
         }
 
-
+        private bool checkIfAmpelGuiIsSet()
+        {
+            if (_selectedAmpelGui == null)
+            {
+                MessageBox.Show("Erzeugen Sie erst eine Ampel.");
+                return false;
+            }
+            return true;
+        }
     }
 }
